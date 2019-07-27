@@ -1,6 +1,6 @@
 ---
 title: "Ames Housing Dataset: Linear Regression Model with Lasso Penalty"
-output: html_notebook
+output: rmarkdown::github_document
 ---
 ##Introduction
 This is one of my first attempts at data analysis and predictive modelling for the Ames Housing dataset of the [*House Prices: Advanced Regression Techniques*](https://www.kaggle.com/c/house-prices-advanced-regression-techniques) training competition on Kaggle.
