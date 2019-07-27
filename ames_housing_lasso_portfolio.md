@@ -1,4 +1,5 @@
-\#\#Introduction This is one of my first attempts at data analysis and
+## Introduction 
+This is one of my first attempts at data analysis and
 predictive modelling for the Ames Housing dataset of the [*House Prices:
 Advanced Regression
 Techniques*](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
@@ -27,7 +28,7 @@ Nevertheless, this analysis provides a good demonstration of how the
 lasso works, and the final model performs quite well on the test dataset
 (top \~50% at the moment of writing).
 
-\#\#Data Preprocessing Load the dataset.
+## Data Preprocessing Load the dataset.
 
 ``` r
 data.train <- read.csv("train.csv", header=T)
@@ -36,8 +37,8 @@ data.test$SalePrice <- 0 #Make test prices 0 for now a single data table can be 
 data <- rbind(data.train, data.test)
 ```
 
-\#\#\#Replacing NAs These are all the variables that have at least one
-missing observation.
+### Replacing NAs
+These are all the variables that have at least one missing observation.
 
 ``` r
 varsWithNA <- names(which(colSums(is.na(data))>0))
@@ -180,8 +181,11 @@ data$HeatingQC <- ordered(data$HeatingQC, levels=c("None", "Po", "Fa", "TA", "Gd
 data$Electrical <- ordered(data$Electrical, levels=c("None", "Mix", "FuseP", "FuseF", "FuseA", "SBrkr"))
 ```
 
-\#\#Model Creation \#\#\#Model Training Regularized linear regression
-model with lasso penalty from **glmnet** library will be used.
+## Model Creation 
+
+### Model Training 
+
+Regularized linear regression model with lasso penalty from **glmnet** library will be used.
 
 First, construct a design matrix from the data since **glmnet** needs
 the data in this format; `model.matrix()` function can be used for that.
@@ -229,7 +233,9 @@ many of the coefficients are reduced to zero when lambda is large (it
 can be hard to see this clearly because of the large number of
 coefficients).
 
-\#\#\#Tuning Parameter Selection Use 80% of the provided training data
+### Tuning Parameter Selection 
+
+Use 80% of the provided training data
 (labeled data) for choosing the most optimal tuning parameter lambda.
 `cv.glmnet()` performs 10-fold cross-validation and provides lambda that
 results in the smallest cross-validation error (marked with red line on
@@ -272,8 +278,9 @@ abline(v=log(best.lambda), col="blue", lwd=2, lty=9)
 As expected, for the best lambda lasso yields a sparse model (many of
 the coefficients are reduced to zero).
 
-\#\#\#Sanity Check The sparse model trained using all the available
-labeled data contains 55 nonzero coefficients. It is expected that lasso
+### Sanity Check 
+
+The sparse model trained using all the available labeled data contains 55 nonzero coefficients. It is expected that lasso
 selected significant variables (meaning they are the most useful
 predictors of the house selling price).
 
@@ -382,7 +389,9 @@ can’t come up with a convincing arguments for some of them.
 Nevertheless, it looks like variable selection that lasso performed
 makes sense for the most part from a purely subjective point of view.
 
-\#\#\#Model Testing The other 20% of the data that was held out from
+### Model Testing 
+
+The other 20% of the data that was held out from
 model training are used to test how well the model performs for a chosen
 lambda.
 
@@ -456,7 +465,9 @@ technique for relative comparison of your own models. This way, there is
 no need to submit the predictions to get an estimate about the accuracy
 of your model.*
 
-\#\#Conclusion A relatively good result (for a linear regression model)
+## Conclusion 
+
+A relatively good result (for a linear regression model)
 was achieved by simply making a few assumptions about the dataset,
 preprocessing it accordingly and using a lasso penalty to reduce the
 model’s variance.
